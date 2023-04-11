@@ -19,8 +19,22 @@ Bhardwaj G, Ko K, Hong Y, Zhang Z, Ho NL, Chintapalli SV, Kline L, Gotlin M, Har
 Step 1: make pssm library
 blastpgp -d <nr_database> -i <input file> -o <output_file> -C <matrix outfile> -e 0.01 -m 0 -s T -a 1 -h 1.0e-6 -j 6 -M BLOSUM62 -F F -u 1 -J T
 # this "blastpgp" tool has been deprecated and replaced by "psiblast", and as is "formatdb" being replaced by "makeblastdb", and "formatrpsdb" by "makeprofiledb" in blast+
-psiblast -d <nr_database> -i <input file> -o <output_file> -C <matrix outfile> -e 0.01 -m 0 -s T -a 1 -h 1.0e-6 -j 6 -M BLOSUM62 -F F -u 1 -J T
-# the settings need to be modified
+
+##run psiblast with domain sequence as query and nr as database:
+psiblast -db $1 \
+	-query $2 \
+	-out $3 \
+	-out_ascii_pssm $4 \
+	-evalue 0.01 \
+	-outfmt 0 \
+	-use_sw_tback \
+	-num_threads 3 \
+	-inclusion_ethresh 1.0e-6 \
+	-matrix BLOSUM62 \
+	-seg no \
+	-parse_deflines
+  
+## summrize the pssm libraries to make a signgle one:
 makeprofiledb -i <pssm file list> -o T -n <library name>
 
 Step 2: search full-length queries against the pssm library
