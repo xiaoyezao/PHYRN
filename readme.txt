@@ -38,4 +38,4 @@ psiblast -db $1 \
 makeprofiledb -i <pssm file list> -o T -n <library name>
 
 Step 2: search full-length queries against the pssm library
-rpsblast -i <query file> -d <PSSM Library> -e 1e10 -m 8 -o <output file>
+rpsblast -query query.fa -db domain_seq -outfmt 6 -evalue 1e10 -out query1.rps
